@@ -10,5 +10,6 @@ public:
     TaskResponse(QString operation, QString status,QString result):
         operation(operation),
         status(status),
-        result(result){}
+        result(result){
+    }
 };

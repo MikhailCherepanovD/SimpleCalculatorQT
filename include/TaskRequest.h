@@ -10,5 +10,6 @@ public:
     TaskRequest(int val1, int val2, Operation operation):
         val1(val1),
         val2(val2),
-        operation(operation){}
+        operation(operation){
+    }
 };

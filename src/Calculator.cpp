@@ -2,7 +2,7 @@
 
 Calculator::Calculator(MainWindow* mainWindow){
     this->mainWindow = mainWindow;
-    bool readStatus = readConfig();
+    bool readStatus = readConfig();//3
     if(!readStatus){
         delayMilliseconds = 0;
     }
@@ -84,7 +84,7 @@ QSharedPointer<TaskResponse> Calculator::makeSafeOperation(QSharedPointer<TaskRe
 }
 
 
-bool Calculator::readConfig(){
+bool Calculator::readConfig(){//1
     /*true - correct read file, false - incorrect read file*/
     QFile file(fileConfigName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {// file is readonly and contains text
@@ -132,7 +132,7 @@ void Calculator::calculate(QSharedPointer<TaskRequest> taskRequestPtr){
 }
 
 void Calculator::reloadDelay(){
-    bool readStatus = readConfig();
+    bool readStatus = readConfig();//2
     if(!readStatus){
         delayMilliseconds = 0;
     }
