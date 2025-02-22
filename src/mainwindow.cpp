@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Simple Calculator");
     calculator = new Calculator(this);
     calculationThread = new QThread();
     calculator->moveToThread(calculationThread);

@@ -14,8 +14,8 @@ class MainWindow;
 class Calculator: public QObject
 {
     Q_OBJECT
-    QString fileConfigName = "../../config.json";
-    // curr dir is path_to_project/build/Desktop-Debug
+    QString fileConfigName = "../../config.json"; // executing dir is path_to_project/build/Desktop-Debug
+    // configFile dir is path_to_project
     int delayMilliseconds;
     MainWindow* mainWindow;
 
