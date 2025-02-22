@@ -1,4 +1,4 @@
-QT       += core gui testlib
+QT       += core gui testlib  # List of modules
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,6 +22,9 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui
+
+SUBDIRS = \
+  tests/SimpleCalculatorTest.pro
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

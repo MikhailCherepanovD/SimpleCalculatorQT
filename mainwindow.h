@@ -3,15 +3,12 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLineEdit>
-#include <QTextBrowser>
 #include <QMessageBox>
 #include <QDebug>
 #include <QString>
 #include <QQueue>
-#include <QMutex>
-#include <QHash>
-#include <QListWidget>
 #include <QThread>
+#include <QSharedPointer>
 #include "Operation.h"
 #include "Calculator.h"
 #include "TaskRequest.h"
@@ -37,10 +34,9 @@ private:
     QThread* calculationThread;
     QQueue<int> queueProcessingTaskId;
     void lauchCalculate(Operation operation);
-    void showProccessingUI();
 signals:
-    void calculationRequest(TaskRequest taskRequest);
+    void calculationRequest(QSharedPointer<TaskRequest> taskRequestPtr);
     void reloadDelayRequest();
 public slots:
-    void outputResponse(TaskResponse taskResponse);
+    void outputResponse(QSharedPointer<TaskResponse> taskResponsePtr);
 };

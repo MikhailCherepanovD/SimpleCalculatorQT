@@ -10,14 +10,20 @@ Calculator::Calculator(MainWindow* mainWindow){
     connect(mainWindow,&MainWindow::reloadDelayRequest, this, &Calculator::reloadDelay);
 }
 
-//private methods:
-TaskResponse Calculator::makeSafeOperation(TaskRequest taskRequest){
-    /*Made safe required operation*/
-    int val1 = taskRequest.val1;
-    int val2 = taskRequest.val2;
-    Operation operation = taskRequest.operation;
+void Calculator::setConfigFile(QString fileConfigName){
+    //Default name is "../../config.json"
+    this->fileConfigName = fileConfigName;
+}
 
-    int result=0;
+//private methods:
+QSharedPointer<TaskResponse> Calculator::makeSafeOperation(QSharedPointer<TaskRequest> taskRequestPtr){
+    /*Made safe required operation*/
+    int val1 = taskRequestPtr->val1;
+    int val2 = taskRequestPtr->val2;
+    Operation operation = taskRequestPtr->operation;
+
+    int resultInt=0;
+    float resultFloat=0;
     QString resultOperationStr="";
     bool statusOperationBool=true;
     QString statusOperationStr="";
@@ -26,7 +32,7 @@ TaskResponse Calculator::makeSafeOperation(TaskRequest taskRequest){
     switch (operation) {
     case Operation::add:
         operationStr = QString::number(val1) + " + " + QString::number(val2);
-        if(__builtin_add_overflow(val1, val2, &result)){
+        if(__builtin_add_overflow(val1, val2, &resultInt)){
             resultOperationStr = "Overflow";
             statusOperationStr = "Error";
             statusOperationBool = false;
@@ -34,7 +40,7 @@ TaskResponse Calculator::makeSafeOperation(TaskRequest taskRequest){
         break;
     case Operation::subtract:
         operationStr = QString::number(val1) + " - " + QString::number(val2);
-        if(__builtin_sub_overflow(val1, val2, &result)){
+        if(__builtin_sub_overflow(val1, val2, &resultInt)){
             resultOperationStr = "Overflow";
             statusOperationStr = "Error";
             statusOperationBool = false;
@@ -42,7 +48,7 @@ TaskResponse Calculator::makeSafeOperation(TaskRequest taskRequest){
         break;
     case Operation::multiply:
         operationStr = QString::number(val1) + " * " + QString::number(val2);
-        if(__builtin_mul_overflow(val1, val2, &result)){
+        if(__builtin_mul_overflow(val1, val2, &resultInt)){
             resultOperationStr = "Overflow";
             statusOperationStr = "Error";
             statusOperationBool = false;
@@ -55,7 +61,9 @@ TaskResponse Calculator::makeSafeOperation(TaskRequest taskRequest){
             statusOperationStr = "Error";
             statusOperationBool = false;
         }
-        result = val1/val2;
+        else{
+            resultFloat = (float)val1/(float)val2;
+        }
         break;
     default:
         operationStr = "Operation do not recognized";
@@ -65,10 +73,14 @@ TaskResponse Calculator::makeSafeOperation(TaskRequest taskRequest){
         break;
     }
     if(statusOperationBool){
-        resultOperationStr = QString::number(result);
+        if(operation==Operation::divide){
+            resultOperationStr = QString::number(resultFloat);
+        }else{
+            resultOperationStr = QString::number(resultInt);
+        }
         statusOperationStr = "Success";
     }
-    return TaskResponse(operationStr,statusOperationStr,resultOperationStr);;
+    return  QSharedPointer<TaskResponse>::create(operationStr,statusOperationStr,resultOperationStr);
 }
 
 
@@ -99,7 +111,7 @@ bool Calculator::readConfig(){
         return false;
     }
 
-    delayMilliseconds = jsonObj["delayMilliseconds"].toInt();  // set 0 if this is non-convertable to int
+    delayMilliseconds = (int)jsonObj["delayMilliseconds"].toDouble();  // to convert non-integer values
     if(delayMilliseconds<0){
         qDebug() << "Delay must be positive value.";
         return false;
@@ -110,13 +122,13 @@ bool Calculator::readConfig(){
 
 
 // slots:
-void Calculator::calculate(TaskRequest taskRequest){
+void Calculator::calculate(QSharedPointer<TaskRequest> taskRequestPtr){
     if (QThread::currentThread()->isInterruptionRequested()) {
         return;// Sometimes even if thread was interrupted, tasks tasks continued to be completed
     }
     QThread::msleep(delayMilliseconds);
-    TaskResponse taskResponse = makeSafeOperation(taskRequest);
-    emit calculationResponse(taskResponse);
+    auto returnedResponsePtr = makeSafeOperation(taskRequestPtr);
+    emit calculationResponse(returnedResponsePtr);
 }
 
 void Calculator::reloadDelay(){

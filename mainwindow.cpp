@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "./ui_mainwindow.h"//
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,18 +31,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-
     delete ui;
     delete calculator;
-    if (calculationThread) {
-        qDebug() << "Перед тем как кинули ожидание";
-        calculationThread->quit();  // Завершаем event loop потока
-        qDebug() << "Ожидаем завершение вычислений";
-        calculationThread->wait();  // Ждём завершения потока
-        qDebug() << "Перед удалением";
-        delete calculationThread;   // Удаляем поток
-    }
 
+    calculationThread->quit();
+    calculationThread->wait();
+    delete calculationThread;
 }
 //slots:
 void MainWindow::lauchCalculate(Operation operation){
@@ -65,15 +59,16 @@ void MainWindow::lauchCalculate(Operation operation){
     queueProcessingTaskId.enqueue(ui->outputListWidget->count()-1);
 
 
-    TaskRequest taskRequest(val1, val2, operation);
-    emit calculationRequest(taskRequest);
+    auto taskRequestPtr = QSharedPointer<TaskRequest>::create(val1, val2, operation);
+
+    emit calculationRequest(taskRequestPtr);
 }
 
 
-void MainWindow::outputResponse(TaskResponse taskResponse) {
-    QString outputStr ="Expression: " % taskResponse.operation % "; "
-                        "Status: " % taskResponse.status % "; "
-                        "Result: " % taskResponse.result;
+void MainWindow::outputResponse(QSharedPointer<TaskResponse> taskResponsePtr) {
+    QString outputStr ="Expression: " % taskResponsePtr->operation % "; "
+                        "Status: " % taskResponsePtr->status % "; "
+                        "Result: " % taskResponsePtr->result;
     int rowNumber = queueProcessingTaskId.dequeue();
     ui->outputListWidget->item(rowNumber)->setText(outputStr);
 }

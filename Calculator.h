@@ -1,12 +1,11 @@
 #pragma once
 #define CALCULATOR_H
 #include <QObject>
-#include <QVector>
 #include <QFile>
 #include <QByteArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QStringListModel>
+#include <QSharedPointer>
 #include "TaskRequest.h"
 #include "TaskResponse.h"
 #include "Operation.h"
@@ -15,18 +14,20 @@ class MainWindow;
 class Calculator: public QObject
 {
     Q_OBJECT
-    const QString fileConfigName = "/home/mikhail/development/QTProjects/ISTA/config.json";
+    QString fileConfigName = "../../config.json";
+    // curr dir is path_to_project/build/Desktop-Debug
     int delayMilliseconds;
     MainWindow* mainWindow;
 
-    TaskResponse makeSafeOperation(TaskRequest taskRequest);
+    QSharedPointer<TaskResponse> makeSafeOperation(QSharedPointer<TaskRequest> taskRequestPtr);
     bool readConfig();// true - correct read file, false - incorrect read file
 public:
     Calculator(MainWindow* mainWindow);
+    void setConfigFile(QString fileConfigName);
 signals:
-    void calculationResponse(TaskResponse taskResponse);
+    void calculationResponse(QSharedPointer<TaskResponse> taskResponsePtr);
 public slots:
-    void calculate(TaskRequest taskRequest);
+    void calculate(QSharedPointer<TaskRequest> taskRequestPtr);
     void reloadDelay();
 };
 

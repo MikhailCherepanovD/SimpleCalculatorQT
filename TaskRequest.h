@@ -1,5 +1,6 @@
 #pragma once
 #include "Operation.h"
+#include <QMetaType>
 struct TaskRequest{
 private:
 public:
