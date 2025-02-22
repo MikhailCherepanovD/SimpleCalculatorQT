@@ -45,14 +45,14 @@ void MainWindow::lauchCalculate(Operation operation){
     QString arg1 = ui->argLineEdit1->text();
     QString arg2 = ui->argLineEdit2->text();
     if(arg1.isEmpty() || arg2.isEmpty()){
-        QMessageBox::critical(this, "Input error", "Fill in both fields");
+        QMessageBox::critical(this, "Input error", "Fill in both fields.");
         return;
     }
     bool valuesIsInt = true;
     int val1 = arg1.toInt(&valuesIsInt);
     int val2 = arg2.toInt(&valuesIsInt);
     if(!valuesIsInt){
-        QMessageBox::critical(this, "Input error", "Only numeric integer values are allowed.");
+        QMessageBox::critical(this, "Input error", "Only integer values are allowed.");
         return;
     }
 
