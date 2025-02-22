@@ -52,7 +52,7 @@ void MainWindow::lauchCalculate(Operation operation){
     int val1 = arg1.toInt(&valuesIsInt);
     int val2 = arg2.toInt(&valuesIsInt);
     if(!valuesIsInt){
-        QMessageBox::critical(this, "Input error", "Only numeric data is allowed.");
+        QMessageBox::critical(this, "Input error", "Only numeric integer values are allowed.");
         return;
     }
 
