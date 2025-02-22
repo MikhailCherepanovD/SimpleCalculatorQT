@@ -1,4 +1,4 @@
-#include "Calculator.h"
+#include "../include/Calculator.h"
 
 Calculator::Calculator(MainWindow* mainWindow){
     this->mainWindow = mainWindow;

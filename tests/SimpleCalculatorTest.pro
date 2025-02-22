@@ -6,20 +6,20 @@ CONFIG += c++17
 
 
 HEADERS += \
-    ../Calculator.h \
-    ../Operation.h \
-    ../TaskRequest.h \
-    ../TaskResponse.h \
-    ../mainwindow.h \
-    CalculatorTest.h \
-    MainWindowTest.h
+    ../include/Calculator.h \
+    ../include/Operation.h \
+    ../include/TaskRequest.h \
+    ../include/TaskResponse.h \
+    ../include/mainwindow.h \
+    include/CalculatorTest.h \
+    include/MainWindowTest.h
 
 SOURCES += \
-    ../mainwindow.cpp \
-    ../Calculator.cpp \
-    CalculatorTests.cpp \
-    MainWindowTest.cpp \
-    main.cpp
+    ../src/mainwindow.cpp \
+    ../src/Calculator.cpp \
+    src/CalculatorTests.cpp \
+    src/MainWindowTest.cpp \
+    src/main.cpp
 
 FORMS += \
     ../mainwindow.ui

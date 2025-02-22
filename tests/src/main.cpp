@@ -1,6 +1,6 @@
 #include <QtTest/QtTest>
-#include "CalculatorTest.h"
-#include "MainWindowTest.h"
+#include "../include/CalculatorTest.h"
+#include "../include/MainWindowTest.h"
 //QTEST_MAIN(CalculatorTest)
 
 int main(int argc, char *argv[]){

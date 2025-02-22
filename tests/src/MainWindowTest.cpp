@@ -1,6 +1,6 @@
-#include "MainWindowTest.h"
+#include "../include/MainWindowTest.h"
 
-void MainWindowTest::addCorrectValues(){
+void MainWindowTest::makeOperations(){
 
     QFile file(fileName);
     file.open(QIODevice::WriteOnly | QIODevice::Text);

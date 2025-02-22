@@ -4,11 +4,11 @@
 #include <QVariant>
 #include <QList>
 #define private public
-#include "../Operation.h"
-#include "../Calculator.h"
-#include "../TaskRequest.h"
-#include "../TaskResponse.h"
-#include "../mainwindow.h"
+#include "../include/Operation.h"
+#include "../include/Calculator.h"
+#include "../include/TaskRequest.h"
+#include "../include/TaskResponse.h"
+#include "../include/mainwindow.h"
 class CalculatorTest: public QObject {
     Q_OBJECT
     const QString fileName = "../../config.json";
