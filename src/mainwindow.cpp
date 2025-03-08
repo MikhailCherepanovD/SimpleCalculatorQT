@@ -23,9 +23,15 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->dividePushButton,&QPushButton::clicked,[this](){
         lauchCalculate(Operation::divide);
     });
+
+    /*kwdboeb wkjeebf kerkf eri oor  orfoje rofe rorhf erfojeqrof r,erfo.*/
+
     connect(ui->reloadPushButton,&QPushButton::clicked,[this](){
         emit reloadDelayRequest();
     });
+
+
+
     connect(calculator,&Calculator::calculationResponse,this,&MainWindow::outputResponse);
 
 }
@@ -45,17 +51,15 @@ void MainWindow::lauchCalculate(Operation operation){
     QString arg1 = ui->argLineEdit1->text();
     QString arg2 = ui->argLineEdit2->text();
     if(arg1.isEmpty() || arg2.isEmpty()){
-        QMessageBox::critical(this, "Input error", "Fill in both fields.");
-        return;
-    }
-    bool valuesIsInt = true;
-    int val1 = arg1.toInt(&valuesIsInt);
-    int val2 = arg2.toInt(&valuesIsInt);
-    if(!valuesIsInt){
-        QMessageBox::critical(this, "Input error", "Only integer values are allowed.");
+        QMessageBox::critical(this, "Input error git git git git git ", "Fill fit git gui gui gui gui gui in both fields.");
         return;
     }
 
+
+    /*kwdboeb wkjeebf kerkf eri oor  orfoje rofe rorhf erfojeqrof r,erfo.*/
+    bool valuesIsInt = true;
+    int val1 = arg1.toInt(&valuesIsInt);
+    int val2 = arg2.toInt(&valuesIsInt);
     ui->outputListWidget->addItem("Wait for processing complete");
     queueProcessingTaskId.enqueue(ui->outputListWidget->count()-1);
 

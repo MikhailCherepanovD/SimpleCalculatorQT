@@ -14,6 +14,9 @@ void Calculator::setConfigFile(QString fileConfigName){
     //Default name is "../../config.json"
     this->fileConfigName = fileConfigName;
 }
+// this is calculator
+
+
 
 //private methods:
 QSharedPointer<TaskResponse> Calculator::makeSafeOperation(QSharedPointer<TaskRequest> taskRequestPtr){
@@ -126,15 +129,19 @@ void Calculator::calculate(QSharedPointer<TaskRequest> taskRequestPtr){
     if (QThread::currentThread()->isInterruptionRequested()) {
         return;// Sometimes even if thread was interrupted, tasks tasks continued to be completed
     }
-    QThread::msleep(delayMilliseconds);
+
     auto returnedResponsePtr = makeSafeOperation(taskRequestPtr);
     emit calculationResponse(returnedResponsePtr);
+    int i=0;
+    i++;
+    i++;
 }
 
 void Calculator::reloadDelay(){
     bool readStatus = readConfig();//2
     if(!readStatus){
-        delayMilliseconds = 0;
+        delayMilliseconds = 777;
+        delayMilliseconds = 1000;
     }
 }
 
