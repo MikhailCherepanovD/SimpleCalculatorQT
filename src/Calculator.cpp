@@ -141,7 +141,6 @@ void Calculator::reloadDelay(){
     bool readStatus = readConfig();//2
     if(!readStatus){
         delayMilliseconds = 777;
-        delayMilliseconds = 1000;
     }
 }
 
